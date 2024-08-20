@@ -21,6 +21,7 @@ reference:
 - subtitle: String
   contents:
   - str_count
+  - str_dedent
   - str_detect
   - str_escape
   - str_extract
