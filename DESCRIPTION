@@ -22,7 +22,8 @@ Imports:
     magrittr,
     rlang (>= 1.0.0),
     stringi (>= 1.5.3),
-    vctrs (>= 0.4.0)
+    vctrs (>= 0.4.0),
+    S7 (>= 0.2.0)
 Suggests: 
     covr,
     dplyr,

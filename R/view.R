@@ -138,11 +138,20 @@ str_view_special <- function(x, html = TRUE) {
   str_replace_all(x, "[\\p{Whitespace}-- \n]+", replace)
 }
 
+stringr_view <- new_class(
+  "stringr_view",
+  package = "stringr",
+  properties = list(
+    x = class_character,
+    id = class_numeric
+  )
+)
+
 str_view_print <- function(x, filter, html = TRUE) {
   if (html) {
     str_view_widget(x)
   } else {
-    structure(x, id = which(filter), class = "stringr_view")
+    stringr_view(x, which(filter))
   }
 }
 
@@ -171,12 +180,19 @@ str_view_widget <- function(lines) {
   )
 }
 
-#' @export
-print.stringr_view <- function(x, ..., n = getOption("stringr.view_n", 20)) {
+base_length <- new_external_generic("base", "length", "x")
+method(base_length, stringr_view) <- function(x) {
+  length(x@x)
+}
+
+base_print <- new_external_generic("base", "print", "x")
+method(base_print, stringr_view) <- function(x, ..., n = getOption("stringr.view_n", 20)) {
   n_extra <- length(x) - n
   if (n_extra > 0) {
     x <- x[seq_len(n)]
   }
+  id <- x@id
+  x <- x@x # extracting the character vector `x` from the S7 object `x` to use in the rest of the function.
 
   if (length(x) == 0) {
     cli::cli_inform(c(x = "Empty `string` provided.\n"))
@@ -185,7 +201,7 @@ print.stringr_view <- function(x, ..., n = getOption("stringr.view_n", 20)) {
 
   bar <- if (cli::is_utf8_output()) "\u2502" else "|"
 
-  id <- format(paste0("[", attr(x, "id"), "] "), justify = "right")
+  id <- format(paste0("[", id, "] "), justify = "right")
   indent <- paste0(cli::col_grey(id, bar), " ")
   exdent <- paste0(strrep(" ", nchar(id[[1]])), cli::col_grey(bar), " ")
 
@@ -201,7 +217,8 @@ print.stringr_view <- function(x, ..., n = getOption("stringr.view_n", 20)) {
   invisible(x)
 }
 
+`base_[` <- new_external_generic("base", "[", "x")
 #' @export
-`[.stringr_view` <- function(x, i, ...) {
-  structure(NextMethod(), id = attr(x, "id")[i], class = "stringr_view")
+method(`base_[`, stringr_view) <- function(x, i, ...) {
+  stringr_view(x@x[i], x@id[i])
 }

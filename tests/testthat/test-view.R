@@ -29,7 +29,7 @@ test_that("view highlights whitespace (except a space/nl)", {
   })
 })
 
-test_that("view displays message for empty vectors",{
+test_that("view displays message for empty vectors", {
   expect_snapshot(str_view(character()))
 })
 
@@ -57,7 +57,7 @@ test_that("vectorised over pattern", {
 
 test_that("[ preserves class", {
   x <- str_view(letters)
-  expect_s3_class(x[], "stringr_view")
+  expect_true(S7_inherits(x[], stringr_view))
 })
 
 test_that("str_view_all() is deprecated", {
