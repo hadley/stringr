@@ -129,6 +129,7 @@ A handful of stringr functions are locale-sensitive: they will perform different
 x <- "I like horses."
 str_to_upper(x)
 str_to_title(x)
+str_to_snake(x) # case transformation for programming
 
 str_to_lower(x)
 # Turkish has two sorts of i: with and without the dot
