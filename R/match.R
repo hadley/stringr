@@ -18,7 +18,7 @@
 #'   if you used "named captured groups", i.e. `(?<name>pattern')`.
 #'
 #' * `str_match_all()`: a list of the same length as `string`/`pattern`
-#'   containing character matrices. Each matrix has columns as descrbed above
+#'   containing character matrices. Each matrix has columns as described above
 #'   and one row for each match.
 #'
 #' @seealso [str_extract()] to extract the complete match,
