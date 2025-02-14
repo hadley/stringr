@@ -84,7 +84,7 @@ Overall the main differences between base R and stringr are:
     
 1.  The output and input of stringr functions has been carefully designed.
     For example, the output of `str_locate()` can be fed directly into 
-    `str_sub()`; the same is not true of `regpexpr()` and `substr()`.
+    `str_sub()`; the same is not true of `regexpr()` and `substr()`.
     
 1.  Base functions use arguments (like `perl`, `fixed`, and `ignore.case`)
     to control how the pattern is interpreted. To avoid dependence between
